@@ -22,7 +22,7 @@ def mads(f, x_start, constraints=None):
     params = [
         "BB_OUTPUT_TYPE OBJ",
         "UPPER_BOUND * 1",
-        "DISPLAY_DEGREE 3",
+        "DISPLAY_DEGREE 2",
         "DISPLAY_ALL_EVAL false",
         "DISPLAY_STATS BBE OBJ",
         "MAX_BB_EVAL 20",
