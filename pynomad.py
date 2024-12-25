@@ -10,7 +10,8 @@ def mads(f, x_start, constraints=None):
         ub = []
 
     def objective(eval_point):
-        x = eval_point.get_coord(0)
+        dim = eval_point.size()
+        x = [eval_point.get_coord(i) for i in range(dim)]
 
         return f(x)
 
