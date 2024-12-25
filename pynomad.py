@@ -1,7 +1,7 @@
 import PyNomad
 
 
-def mads(f, x_start, constraints=None):
+def mads(f, x_start, constraints=None, dim_one=True):
     if constraints is not None:
         lb = constraints[0]
         ub = constraints[1]
@@ -9,16 +9,25 @@ def mads(f, x_start, constraints=None):
         lb = []
         ub = []
 
-    def objective(eval_point):
-        dim = eval_point.size()
-        x = [eval_point.get_coord(i) for i in range(dim)]
+    def objective(eval_point, dim_one=True):
+        if dim_one:
+            x = eval_point.get_coord(0)
+        else:
+            dim = eval_point.size()
+            x = [eval_point.get_coord(i) for i in range(dim)]
 
         return f(x)
 
-    def blackbox(eval_point):
-        eval_value = objective(eval_point)
-        eval_point.setBBO(str(eval_value).encode("utf-8"))
-        return True
+    if dim_one:
+        def blackbox(eval_point):
+            eval_value = objective(eval_point, True)
+            eval_point.setBBO(str(eval_value).encode("utf-8"))
+            return True
+    else:
+        def blackbox(eval_point):
+            eval_value = objective(eval_point, False)
+            eval_point.setBBO(str(eval_value).encode("utf-8"))
+            return True
 
     params = [
         "BB_OUTPUT_TYPE OBJ",
