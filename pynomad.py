@@ -31,11 +31,12 @@ def mads(f, x_start, constraints=None, dim_one=True):
 
     params = [
         "BB_OUTPUT_TYPE OBJ",
-        "UPPER_BOUND * 1",
         "DISPLAY_DEGREE 2",
         "DISPLAY_ALL_EVAL false",
         "DISPLAY_STATS BBE OBJ",
         "MAX_BB_EVAL 20",
+        f"LOWER_BOUND {' '.join(map(str, lb))}",
+        f"UPPER_BOUND {' '.join(map(str, ub))}",
     ]
 
     result = PyNomad.optimize(blackbox, x_start, lb, ub, params)
